@@ -2,14 +2,17 @@ import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 
-interface CurrencyViewModel {
-  isoCode: string;
-  symbol: string;
-  name: string;
-}
+import { Client, CurrencyGetViewModel } from "./Api.Client";
+
+// interface CurrencyGetViewModel {
+//   isoCode: string;
+//   symbol: string;
+//   name: string;
+//   isDefault: boolean;
+// }
 
 interface IAppState {
-  currencies: CurrencyViewModel[];
+  currencies: CurrencyGetViewModel[];
 }
 
 class App extends Component<{}, IAppState> {
@@ -20,19 +23,21 @@ class App extends Component<{}, IAppState> {
   }
 
   componentDidMount() {
-    this.getCurrencies();
+    // this.getCurrencies();
+    const client = new Client();
+    client.getAll().then(currencies => this.setState({ currencies }));
   }
 
-  getCurrencies() {
-    fetch("/api/values")
-      .then(response => {
-        return response.json();
-      })
-      .then(currencies => {
-        console.log(JSON.stringify(currencies));
-        this.setState({ currencies });
-      });
-  }
+  // getCurrencies() {
+  //   fetch("/api/values")
+  //     .then(response => {
+  //       return response.json();
+  //     })
+  //     .then(currencies => {
+  //       console.log(JSON.stringify(currencies));
+  //       this.setState({ currencies });
+  //     });
+  // }
 
   render() {
     return (
@@ -66,7 +71,12 @@ class App extends Component<{}, IAppState> {
               <label htmlFor="currenciesSelect">Currencies</label>
               <select className="form-control" id="currenciesSelect">
                 {this.state.currencies.map(c => (
-                  <option key={c.isoCode} value={c.isoCode} title={c.name}>
+                  <option
+                    key={c.isoCode}
+                    value={c.isoCode}
+                    title={c.name}
+                    selected={c.isDefault}
+                  >
                     {c.symbol} ({c.isoCode})
                   </option>
                 ))}
