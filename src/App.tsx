@@ -68,7 +68,9 @@ class App extends Component<{}, IAppState> {
   render() {
     const pagination = paginationFactory({
       page: 2,
-      sizePerPage: 3
+      sizePerPage: 3,
+      alwaysShowAllBtns: true,
+      hideSizePerPage: true
     });
 
     return (
