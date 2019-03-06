@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import BootstrapTable from "react-bootstrap-table-next";
+
 import logo from "./logo.svg";
 import "./App.css";
 
@@ -14,6 +16,29 @@ import { Client, CurrencyGetViewModel } from "./Api.Client";
 interface IAppState {
   currencies: CurrencyGetViewModel[];
 }
+
+const columns = [
+  {
+    dataField: "isoCode",
+    text: "ISO Code",
+    sort: true
+  },
+  {
+    dataField: "symbol",
+    text: "Symbol",
+    sort: true
+  },
+  {
+    dataField: "name",
+    text: "Name",
+    sort: true
+  },
+  {
+    dataField: "isDefault",
+    text: "Is Default",
+    sort: true
+  }
+];
 
 class App extends Component<{}, IAppState> {
   constructor(props: {}) {
@@ -57,6 +82,11 @@ class App extends Component<{}, IAppState> {
       //   </header>
       <div className="App container-fluid">
         <div>
+          <BootstrapTable
+            keyField="id"
+            data={this.state.currencies}
+            columns={columns}
+          />
           <form>
             {/* <div className="form-group">
               <label htmlFor="exampleFormControlInput1">Email address</label>
