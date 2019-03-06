@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
+import paginationFactory from "react-bootstrap-table2-paginator";
 
 import logo from "./logo.svg";
 import "./App.css";
@@ -65,6 +66,11 @@ class App extends Component<{}, IAppState> {
   // }
 
   render() {
+    const pagination = paginationFactory({
+      page: 2,
+      sizePerPage: 3
+    });
+
     return (
       //   <header className="App-header">
       //     <img src={logo} className="App-logo" alt="logo" />
@@ -83,9 +89,10 @@ class App extends Component<{}, IAppState> {
       <div className="App container-fluid">
         <div>
           <BootstrapTable
-            keyField="id"
+            keyField="isoCode"
             data={this.state.currencies}
             columns={columns}
+            pagination={pagination}
           />
           <form>
             {/* <div className="form-group">
